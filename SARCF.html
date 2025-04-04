@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SARC-F Questionnaire (0-50 Scale)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-purple-100 flex justify-center items-center min-h-screen">
+
+    <div class="bg-gradient-to-r from-purple-700 to-purple-400 text-white p-8 rounded-2xl shadow-lg w-96">
+        <h2 class="text-2xl font-bold text-center mb-6">SARC-F Sarcopenia Risk Test</h2>
+
+        <!-- Questions -->
+        <div class="space-y-4">
+            <div>
+                <label class="block">1. Strength (lifting 5kg):</label>
+                <select id="strength" class="w-full p-2 rounded-md text-gray-700">
+                    <option value="0">No difficulty (0)</option>
+                    <option value="5">Some difficulty (5)</option>
+                    <option value="10">A lot of difficulty / Unable (10)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block">2. Walking across a room:</label>
+                <select id="walking" class="w-full p-2 rounded-md text-gray-700">
+                    <option value="0">No difficulty (0)</option>
+                    <option value="5">Some difficulty (5)</option>
+                    <option value="10">A lot of difficulty / Unable (10)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block">3. Rising from a chair:</label>
+                <select id="rising" class="w-full p-2 rounded-md text-gray-700">
+                    <option value="0">No difficulty (0)</option>
+                    <option value="5">Some difficulty (5)</option>
+                    <option value="10">A lot of difficulty / Unable (10)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block">4. Climbing 10 stairs:</label>
+                <select id="stairs" class="w-full p-2 rounded-md text-gray-700">
+                    <option value="0">No difficulty (0)</option>
+                    <option value="5">Some difficulty (5)</option>
+                    <option value="10">A lot of difficulty / Unable (10)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block">5. Falls in past year:</label>
+                <select id="falls" class="w-full p-2 rounded-md text-gray-700">
+                    <option value="0">None (0)</option>
+                    <option value="5">1-3 times (5)</option>
+                    <option value="10">4 or more times (10)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Button -->
+        <button onclick="calculateSarcF()" class="bg-purple-900 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-lg w-full mt-4">
+            Check Risk
+        </button>
+
+        <!-- Result -->
+        <p id="result" class="mt-4 p-3 text-lg font-semibold text-center rounded-lg hidden"></p>
+    </div>
+
+    <script>
+        function calculateSarcF() {
+            let strength = parseInt(document.getElementById("strength").value);
+            let walking = parseInt(document.getElementById("walking").value);
+            let rising = parseInt(document.getElementById("rising").value);
+            let stairs = parseInt(document.getElementById("stairs").value);
+            let falls = parseInt(document.getElementById("falls").value);
+
+            let totalScore = strength + walking + rising + stairs + falls;
+            let resultBox = document.getElementById("result");
+            let risk = "Low Risk";
+            let bgColor = "bg-green-500";
+
+            if (totalScore >= 35) {
+                risk = "High Risk for Sarcopenia";
+                bgColor = "bg-red-500";
+            } else if (totalScore >= 20) {
+                risk = "Moderate Risk";
+                bgColor = "bg-yellow-500";
+            }
+
+            resultBox.innerText = "SARC-F Score: " + totalScore + " (" + risk + ")";
+            resultBox.className = `mt-4 p-3 text-lg font-semibold text-center rounded-lg text-white ${bgColor}`;
+            resultBox.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
